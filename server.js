@@ -39,13 +39,11 @@ const job =  schedule.scheduleJob('10 * * * *', async ()  => {
             }).then((response) => {
                 const res = response.data;
                 for (let i = 0; i < res.length; i++) {
-                    console.log("updating values for: ")
-                    console.log(res[i])
+                    console.log(`updating values for: ${res[i]}`)
                     axios.post(baseurl + '/dailytotals', {
                         user_id: res[i]['user_id']
                     })
                     .then((r) => {
-                        console.log(`added new total, need to delete ID ${res[i]['user_id']}`)
                         const deleteQPs = {
                             user_id: res[i]['user_id']
                         }
