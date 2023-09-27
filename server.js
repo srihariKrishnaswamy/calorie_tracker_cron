@@ -19,10 +19,9 @@ const updateTimes = {
     "8:0:0": ["US/Alaska"],
     "10:0:0": ["US/Hawaii"],
     "0:0:0": ["UK/London"],
-    "19:13:0": ["Dummy"]
 }
 
-const job =  schedule.scheduleJob('* * * * * *', async ()  => {
+const job =  schedule.scheduleJob('10 * * * *', async ()  => {
     const currentUtcTime = new Date()
     const hours = currentUtcTime.getUTCHours();
     const minutes = currentUtcTime.getUTCMinutes();
