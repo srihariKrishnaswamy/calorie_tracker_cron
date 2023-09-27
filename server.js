@@ -21,7 +21,7 @@ const updateTimes = {
     "0:0:0": ["UK/London"],
 }
 
-const job =  schedule.scheduleJob('10 * * * *', async ()  => {
+const job =  schedule.scheduleJob('*/10 * * * *', async ()  => {
     const currentUtcTime = new Date()
     const hours = currentUtcTime.getUTCHours();
     const minutes = currentUtcTime.getUTCMinutes();
@@ -67,5 +67,4 @@ const job =  schedule.scheduleJob('10 * * * *', async ()  => {
             })
         }
     }
-    // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 })
