@@ -3,7 +3,6 @@ const axios = require("axios");
 require("dotenv").config()
 
 const baseurl = process.env.APIURL
-
 /*
 map of timezones : exact time to update
 switch statement to see if its the current update time for a timezone
