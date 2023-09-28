@@ -1,7 +1,8 @@
-const axios = require('axios')
-const schedule = require('node-schedule')
+const axios = require("axios");
+// const schedule = require("node-schedule");
+require("dotenv").config()
 
-const baseurl = "https://caltracker-backend-988509e33b53.herokuapp.com"
+const baseurl = process.env.APIURL
 
 /*
 map of timezones : exact time to update
@@ -11,60 +12,61 @@ for that current timezone, get the timezone name
 - delete old daily totals for all users in that timezone
 */
 const updateTimes = {
-    "18:30:0":["India/New_Delhi"],
-    "4:0:0": ["US/New_York"],
-    "5:0:0": ["US/Chicago"],
-    "6:0:0":  ["US/Denver"],
-    "7:0:0": ["US/Los_Angeles"],
-    "8:0:0": ["US/Alaska"],
-    "10:0:0": ["US/Hawaii"],
-    "0:0:0": ["UK/London"],
-}
+  "18:30:0": ["India/New_Delhi"],
+  "4:0:0": ["US/New_York"],
+  "5:0:0": ["US/Chicago"],
+  "6:0:0": ["US/Denver"],
+  "7:0:0": ["US/Los_Angeles"],
+  "8:0:0": ["US/Alaska"],
+  "10:0:0": ["US/Hawaii"],
+  "0:0:0": ["UK/London"],
+};
 
-const job =  schedule.scheduleJob('*/10 * * * *', async ()  => {
-    const currentUtcTime = new Date()
-    const hours = currentUtcTime.getUTCHours();
-    const minutes = currentUtcTime.getUTCMinutes();
-    const seconds = currentUtcTime.getUTCSeconds();
-    const timeString = `${hours}:${minutes}:${seconds}`;
-    console.log(timeString);
-    if (timeString in updateTimes) {
-        for (const val of updateTimes[timeString]) {
-            console.log("timezone: " + val)
-            const queryParams = {
-                timezone: val
-            }
-            axios.get(baseurl + '/users/timezone', {
-                params: queryParams
-            }).then((response) => {
-                const res = response.data;
-                for (let i = 0; i < res.length; i++) {
-                    console.log(`updating values for: ${res[i]}`)
-                    axios.post(baseurl + '/dailytotals', {
-                        user_id: res[i]['user_id']
-                    })
-                    .then((r) => {
-                        const deleteQPs = {
-                            user_id: res[i]['user_id']
-                        }
-                        const customAxios = axios.create({
-                            method: 'delete',
-                            baseURL: baseurl + "/dailytotals",
-                            params: deleteQPs
-                        })
-                        customAxios()
-                            .then((deleteRes) => {
-                                console.log(deleteRes.data)
-                            })
-                            .catch((err) => {
-                                console.error(err)
-                            })
-                    })
-                    .catch((err) => {
-                        console.error(err)
-                    })
-                }
+const currentUtcTime = new Date();
+const hours = currentUtcTime.getUTCHours();
+const minutes = currentUtcTime.getUTCMinutes();
+const seconds = currentUtcTime.getUTCSeconds();
+const timeString = `${hours}:${minutes}:${seconds}`;
+console.log(timeString);
+if (timeString in updateTimes) {
+  for (const val of updateTimes[timeString]) {
+    console.log("timezone: " + val);
+    const queryParams = {
+      timezone: val,
+    };
+    axios
+      .get(baseurl + "/users/timezone", {
+        params: queryParams,
+      })
+      .then((response) => {
+        const res = response.data;
+        for (let i = 0; i < res.length; i++) {
+          console.log(`updating values for: ${res[i]}`);
+          axios
+            .post(baseurl + "/dailytotals", {
+              user_id: res[i]["user_id"],
             })
+            .then((r) => {
+              const deleteQPs = {
+                user_id: res[i]["user_id"],
+              };
+              const customAxios = axios.create({
+                method: "delete",
+                baseURL: baseurl + "/dailytotals",
+                params: deleteQPs,
+              });
+              customAxios()
+                .then((deleteRes) => {
+                  console.log(deleteRes.data);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         }
-    }
-})
+      });
+  }
+}
