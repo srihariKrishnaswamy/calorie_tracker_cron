@@ -18,7 +18,7 @@ const updateTimes = {
   "6:0:0": ["US/Denver"],
   "7:0:0": ["US/Los_Angeles"],
   "9:0:0": ["US/Alaska"],
-  "12:0:0": ["US/Hawaii"],
+  "10:0:0": ["US/Hawaii"],
   "0:0:0": ["UK/London"],
 };
 
