@@ -23,25 +23,17 @@ const updateTimes = {
 };
 
 function timeIsClose(hours, minutes) {
-    for (const val of updateTimes) {   
-      var mapHour = "";
-      var mapMin = ""
-      var i = 0;
-      while (val[i] !== ":") {
-        mapHour += val[i]
-        i ++;
-      }
-      i ++;
-      while (val[i] !== ":") {
-        mapMin += val[i]
-        i ++;
-      }
-      if ((parseInt(mapHour) === (hours + 1) % 24 && parseInt(mapMin) === minutes) || 
-        (parseInt(mapMin) === 30 && parseInt(mapHour) === hours && parseInt(mapMin) === minutes)) {
-        return updateTimes[val]
-      }
+  for (const key in updateTimes) {
+    const val = updateTimes[key];
+    const [mapHour, mapMin] = key.split(':').map(Number);
+    if (
+      (mapHour === (hours + 1) % 24 && mapMin === minutes) ||
+      (mapMin === 30 && mapHour === hours && mapMin === minutes)
+    ) {
+      return val;
     }
-    return null;
+  }
+  return null;
 }
 
 app.get('/main', async (req, res) => {
