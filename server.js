@@ -13,12 +13,12 @@ const baseurl = process.env.APIURL;
 
 const updateTimes = {
   "18:30:0": ["India/New_Delhi"],
-  "4:0:0": ["US/New_York"],
-  "5:0:0": ["US/Chicago"],
+  "5:0:0": ["US/New_York"],
+  "6:0:0": ["US/Chicago"],
   "6:0:0": ["US/Denver"],
   "7:0:0": ["US/Los_Angeles"],
-  "8:0:0": ["US/Alaska"],
-  "10:0:0": ["US/Hawaii"],
+  "9:0:0": ["US/Alaska"],
+  "12:0:0": ["US/Hawaii"],
   "0:0:0": ["UK/London"],
 };
 
