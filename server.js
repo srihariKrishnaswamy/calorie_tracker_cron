@@ -13,8 +13,8 @@ const baseurl = process.env.APIURL;
 
 const updateTimes = {
   "18:30:0": ["India/New_Delhi"],
-  "5:0:0": ["US/New_York"],
-  "6:0:0": ["US/Chicago"],
+  "4:0:0": ["US/New_York"],
+  "5:0:0": ["US/Chicago"],
   "6:0:0": ["US/Denver"],
   "7:0:0": ["US/Los_Angeles"],
   "9:0:0": ["US/Alaska"],
@@ -28,10 +28,7 @@ function timeIsClose(hours, minutes) {
   for (const key in updateTimes) {
     const val = updateTimes[key];
     const [mapHour, mapMin] = key.split(':').map(Number);
-    if (
-      (mapHour === (hours + 1) % 24 && mapMin === minutes) ||
-      (mapMin === 30 && mapHour === hours && mapMin === minutes)
-    ) {
+    if (mapHour === hours && mapMin === minutes) {
       return val;
     }
   }
