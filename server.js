@@ -37,7 +37,6 @@ function timeIsClose(hours, minutes) {
 }
 
 app.get('/main', async (req, res) => {
-  // insert 2 second countdown here
   await new Promise(resolve => setTimeout(resolve, 2000));
   const currentUtcTime = new Date();
   const hours = currentUtcTime.getUTCHours();
