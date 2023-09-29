@@ -22,6 +22,8 @@ const updateTimes = {
   "0:0:0": ["UK/London"],
 };
 
+// add logic for daylight savings stuff
+
 function timeIsClose(hours, minutes) {
   for (const key in updateTimes) {
     const val = updateTimes[key];
